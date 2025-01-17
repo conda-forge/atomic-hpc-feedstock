@@ -6,11 +6,11 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3d216272985bc39058bdb2fb5d29ce98fe58bd83d20a916e4bef94a31235a588
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - run_config = atomic_hpc.frontend.run_config:main
@@ -20,15 +20,17 @@ build:
 requirements:
   host:
     - pip
-    - python
+    - python {{ python_min }}
   run:
     - jsonextended >=0.5.6
     - jsonschema
     - paramiko
-    - python
+    - python >={{ python_min }}
     - ruamel.yaml >=0.15.3
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - atomic_hpc
     - atomic_hpc.config_yaml
